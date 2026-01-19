@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Course Of Android Reverse Engineering With AI - FTGM TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-pink: #e91e63;
+            --bg-gray: #f8f9fa;
+            --text-dark: #2c3e50;
+            --purple-accent: #ff5252;
+            --star-color: #f1c40f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: var(--bg-gray); overflow-x: hidden; color: #444; }
+
+        /* --- Header & Sidebar (Strictly Same) --- */
+        header {
+            background: #fff; padding: 10px 20px; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .logo img { height: 45px; }
+        .menu-btn { font-size: 24px; cursor: pointer; color: #555; }
+        .sidebar {
+            position: fixed; top: 0; right: -280px; width: 280px; height: 100%;
+            background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease; z-index: 2000; padding: 40px 20px;
+        }
+        .sidebar.active { right: 0; }
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; z-index: 1999;
+        }
+
+        /* --- Product Layout --- */
+        .product-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 40px; }
+        
+        .product-gallery { flex: 1; min-width: 320px; }
+        .product-image { 
+            width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            position: sticky; top: 100px;
+        }
+
+        .product-info { flex: 1.5; min-width: 320px; }
+        .product-title { font-size: 2rem; color: var(--text-dark); margin-bottom: 15px; line-height: 1.2; }
+        
+        .ratings { color: var(--star-color); margin-bottom: 20px; font-size: 0.9rem; }
+        .ratings span { color: #888; margin-left: 10px; }
+
+        .price-wrapper { font-size: 1.8rem; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .old-price { text-decoration: line-through; color: #bbb; font-weight: 300; }
+        .new-price { color: var(--primary-pink); font-weight: 700; }
+
+        .qty-box { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
+        .qty-input { width: 60px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; text-align: center; font-weight: bold; }
+        
+        .btn-add-cart {
+            background: var(--primary-pink); color: white; border: none; padding: 15px 40px;
+            border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-add-cart:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .meta-info { border-top: 1px solid #eee; padding-top: 20px; margin-top: 20px; font-size: 0.9rem; line-height: 1.8; }
+        .meta-info b { color: var(--text-dark); }
+
+        /* --- Tabs/Description --- */
+        .description-tabs { margin-top: 50px; border-top: 1px solid #eee; }
+        .tab-head { display: flex; gap: 30px; margin-bottom: 30px; padding-top: 20px; }
+        .tab-link { font-weight: 700; color: var(--text-dark); cursor: pointer; position: relative; padding-bottom: 5px; }
+        .tab-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--primary-pink); }
+
+        .content-section { line-height: 1.7; color: #555; }
+        .content-section h3 { margin: 25px 0 15px; color: var(--text-dark); }
+        .content-section ul { margin-left: 20px; margin-bottom: 20px; }
+        .content-section li { margin-bottom: 8px; }
+
+        .bonus-box { background: #fff; border-left: 4px solid var(--primary-pink); padding: 20px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        footer { background: #2d3135; color: white; padding: 40px 20px; text-align: center; margin-top: 60px; }
+
+        /* Floating Widgets */
+        .wid-up { position: fixed; bottom: 20px; right: 20px; background: #888; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; z-index: 1000; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="overlay"></div>
+    <div class="sidebar" id="sidebar">
+        <h3 style="color:var(--text-dark)">Navigation</h3>
+        <ul style="list-style:none; margin-top:30px;">
+            <li style="margin-bottom:15px;"><a href="index.html" style="text-decoration:none; color:var(--text-dark); display:flex; align-items:center;"><i class="fas fa-home" style="margin-right:15px; color:var(--primary-pink);"></i> Home</a></li>
+            <li style="margin-bottom:15px;"><a href="about-us.html" style="text-decoration:none; color:var(--text-dark); display:flex; align-items:center;"><i class="fas fa-info-circle" style="margin-right:15px; color:var(--primary-pink);"></i> About Us</a></li>
+        </ul>
+    </div>
+
+    <header>
+        <div class="logo"><img src="https://i.ibb.co/Vc7nRZnv/cropped-unnamed.png" alt="Logo"></div>
+        <div class="menu-btn" id="menuToggle"><i class="fas fa-bars"></i></div>
+    </header>
+
+    <div class="product-container">
+        <div class="product-gallery">
+            <img src="https://www.dedseec.com/stenseet/2025/06/Advance-Course-Of-Android-Reverse-Engineering-With-AI-2.jpg" class="product-image" alt="Course Image">
+        </div>
+
+        <div class="product-info">
+            <h1 class="product-title">Advance Course Of Android Reverse Engineering With AI</h1>
+            
+            <div class="ratings">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(7 customer reviews)</span>
+            </div>
+
+            <div class="price-wrapper">
+                <span class="old-price">$66.98</span>
+                <span class="new-price">$56.32</span>
+            </div>
+
+            <p style="margin-bottom: 25px; color: #777;">Master the art of modifying Android apps and bypassing security using the power of AI.</p>
+
+            <div class="qty-box">
+                <input type="number" value="1" min="1" class="qty-input">
+                <button class="btn-add-cart" onclick="location.href='cart.html'">ADD TO BASKET</button>
+            </div>
+
+            <div class="meta-info">
+                <p><b>Category:</b> Course</p>
+                <p><b>Tags:</b> Android Reverse Engineering, AI, Cybersecurity, Hacking, Smali, Frida</p>
+            </div>
+        </div>
+
+        <div class="description-tabs">
+            <div class="tab-head">
+                <div class="tab-link active">Description</div>
+                <div class="tab-link">Reviews (1)</div>
+            </div>
+
+            <div class="content-section">
+                <h3>🚀 What You’ll Learn:</h3>
+                <p>This advanced Android reverse engineering course teaches you how to analyze, modify, and protect apps and OS libraries. You’ll master tools like Smali, Frida, MT Manager, and Ghidra for static and dynamic analysis, malware detection, and code obfuscation. Learn to decrypt encrypted assets, bypass Google Play Protection, modify OS libraries, and circumvent security features like AES encryption, signature checks, SSL pinning, and app authentication. The course also covers extracting keys, cracking licenses, and rebuilding APKs—all with minimal coding. By the end, you’ll confidently reverse engineer, secure, and enhance Android apps using AI-driven techniques.</p>
+
+                <h3>🤖 Why AI?</h3>
+                <p>Use AI to automate repetitive tasks, identify vulnerabilities faster, and enhance reverse engineering with intelligent suggestions — perfect for beginners and pros alike.</p>
+
+                <h3>Course Topics:</h3>
+                <ul style="column-count: 2; column-gap: 40px; list-style-type: decimal;">
+                    <li>Introduction To Advance Android RE</li>
+                    <li>Smali Language & AI Modification</li>
+                    <li>Mastering Frida</li>
+                    <li>Static & Dynamic Analysis</li>
+                    <li>APK Malware Analysis</li>
+                    <li>Premium MT & NP Manager</li>
+                    <li>Native Language Conversion</li>
+                    <li>DEX Encryption & Hiding</li>
+                    <li>Custom Source Code Obfuscation</li>
+                    <li>Binary Level Anti-Decompile</li>
+                    <li>Cracking SO Library Licenses</li>
+                    <li>Bypassing AES & SSL Pinning</li>
+                    <li>Signature Integrity Bypass</li>
+                    <li>Dumping Protected Dex</li>
+                    <li>Ghidra Key Extraction</li>
+                </ul>
+
+                <div class="bonus-box">
+                    <h3 style="margin-top:0;">📦 What You Get:</h3>
+                    <ul>
+                        <li>Full Lifetime Access</li>
+                        <li>Step-by-Step Practical Demos</li>
+                        <li><b>Size:</b> 3.70 GB Downloadable Resources</li>
+                        <li>Free Updates & Community Support</li>
+                    </ul>
+                </div>
+
+                <h3>🎓 After Completing This Course:</h3>
+                <p>You’ll become a professional-level Android Reverse Engineer — capable of modifying and patching any APK, identifying logic flaws, and working smarter with AI-powered tools.</p>
+
+                <p style="font-size: 0.8rem; background: #eee; padding: 15px; border-radius: 5px; margin-top: 30px;">
+                    <b>Disclaimer:</b> Any actions related to the material contained within this Course is solely your responsibility. The authors will not be held responsible for any misuse of information.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="copyright">Copyright © 2017 - 2025 FTGM HACKS</div>
+    </footer>
+
+    <div class="wid-up" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-chevron-up"></i></div>
+
+    <script>
+        const btn = document.getElementById('menuToggle');
+        const side = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        btn.onclick = () => {
+            side.classList.add('active');
+            overlay.style.display = 'block';
+        };
+
+        overlay.onclick = () => {
+            side.classList.remove('active');
+            overlay.style.display = 'none';
+        };
+    </script>
+</body>
+</html>
