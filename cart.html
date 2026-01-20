@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment - FTGM TECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-yellow: #ffdf00;
+            --accent-purple: #a020f0;
+            --bg-gray: #ffffff;
+            --text-dark: #000000;
+            --success-green: #25d366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: var(--bg-gray); color: var(--text-dark); }
+
+        /* Timer Bar */
+        .timer-bar {
+            background: #000; color: #fff; text-align: center; padding: 10px;
+            font-weight: bold; font-size: 1.1rem; position: sticky; top: 0; z-index: 1001;
+        }
+        .timer-bar span { color: var(--primary-yellow); margin-left: 10px; font-family: monospace; }
+
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+
+        /* Video Section - Updated to match your specific embed style */
+        .video-wrapper {
+            background: #000; padding: 10px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 40px;
+            position: relative; overflow: hidden;
+        }
+        .video-wrapper iframe {
+            width: 100%; border-radius: 10px; display: block; aspect-ratio: 16/9;
+        }
+
+        /* Benefits List */
+        .benefits-section { margin: 25px 0; }
+        .benefits-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; }
+        .benefit-item { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 0.95rem; }
+        .benefit-item i { color: #ffa500; margin-right: 10px; margin-top: 3px; }
+
+        /* Instructions */
+        .instruction-step { font-weight: bold; font-size: 1.1rem; margin: 15px 0; }
+        
+        /* Bank Details */
+        .bank-details { margin: 20px 0; line-height: 1.6; }
+        .bank-details strong { font-size: 1.1rem; }
+
+        /* Pricing Card */
+        .pricing-card {
+            background: var(--primary-yellow); padding: 15px; border-radius: 10px;
+            text-align: center; margin: 20px 0; border: 2px dashed #000;
+        }
+        .pricing-card h2 { font-size: 1.3rem; margin-bottom: 5px; }
+        .stars { color: #ff9800; font-size: 1.2rem; }
+
+        /* Form Styling */
+        .enroll-box { border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
+        .enroll-header { background: var(--primary-yellow); text-align: center; padding: 10px; font-weight: bold; margin: -20px -20px 20px -20px; border-radius: 5px 5px 0 0; }
+        
+        .form-group { margin-bottom: 15px; }
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px;
+        }
+
+        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; font-size: 0.9rem; font-weight: 500; }
+        .checkbox-group input { margin-top: 4px; }
+
+        /* Custom Upload Button */
+        .upload-btn {
+            background: #e0e0e0; border: 1px solid #999; padding: 8px 15px;
+            cursor: pointer; display: inline-block; border-radius: 3px; font-size: 0.9rem;
+        }
+
+        /* Send Button */
+        .btn-submit {
+            background: var(--accent-purple); color: white; width: 100%; padding: 15px;
+            border: none; border-radius: 5px; font-weight: bold; font-size: 1rem;
+            cursor: pointer; margin-top: 10px; text-transform: uppercase;
+        }
+
+        /* Review Images */
+        .reviews-container { margin-top: 40px; text-align: center; }
+        .review-img { width: 100%; max-width: 400px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        .footer-info { background: #000; color: #fff; text-align: center; padding: 15px; margin-top: 30px; font-size: 0.8rem; }
+        
+        #imagePreview { max-width: 100px; margin-top: 10px; display: none; border: 1px solid #ccc; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid var(--accent-purple); border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; margin: 10px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="timer-bar">
+        Don't Miss this Limited Offer! <span id="countdown">01 : 05 : 05</span>
+    </div>
+
+    <div class="container">
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="benefits-section">
+            <div class="benefits-title">With All Courses, You'll get Free:</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Softwares & Tools Free</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> WhatsApp & Facebook Hacking Course</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Live Webinar: Real-time Doubt Clearance</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Start Payload (Malware) Using Notification?</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Start Payload (Malware) By Calling Victim?</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> How To Give Permissions To Any App Without Touch</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Trick To Bypass All Antiviruses For Long Time</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Bonus: Easily Hack Anyone IN 10 Sec With Unique Technique</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> How to See Live Screen Anyone</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Access to Facebook Community</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Ethical Hacking Certificate</div>
+            <div class="benefit-item"><i class="fas fa-check"></i> Direct Support</div>
+        </div>
+
+        <p class="instruction-step">1- Send the Amount to any of the accounts below & take a screenshot.</p>
+        <p class="instruction-step">2- Attach the screenshot with the form below & you'll get access after confirmation.</p>
+
+        <div class="bank-details">
+            <p><strong>Bank:</strong> Meezan</p>
+            <p><strong>Title:</strong> Arif</p>
+            <p><strong>Account No:</strong> 16010105053241</p>
+            <br>
+            <p><strong>EasyPaisa</strong></p>
+            <p><strong>Account No:</strong> 0344-1372730</p>
+        </div>
+
+        <div class="pricing-card">
+            <h2>5,000 Rs. Only for All Bonuses & Course</h2>
+            <p>(Very Limited Time!)</p>
+            <p style="margin-top:10px;">10000+ Already Enrolled</p>
+            <div class="stars">★★★★★ <span style="color:#000; font-size: 0.9rem;">4.9/5 (from 2053+ students)</span></div>
+            <p style="margin-top:5px;">💰 7-Days Money Back Guarantee</p>
+        </div>
+
+        <div class="enroll-box">
+            <div class="enroll-header">ENROLL NOW</div>
+            <div class="form-group"><input type="text" id="userName" placeholder="Name"></div>
+            <div class="form-group"><input type="email" id="userEmail" placeholder="Email"></div>
+            <div class="form-group"><input type="number" id="userWhatsApp" placeholder="WhatsApp Number"></div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="checkSent">
+                <label for="checkSent">Have you sent the payment online on any the accounts mentioned above?</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="checkUpload">
+                <label for="checkUpload">Yes - Then please upload the screenshot below</label>
+            </div>
+
+            <div class="form-group">
+                <input type="file" id="imageUpload" hidden accept="image/*">
+                <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Choose File</button>
+                <span id="fileNameDisplay" style="font-size: 0.8rem; color: #666;">No file chosen</span>
+                <div class="loader" id="uploadLoader"></div>
+                <img id="imagePreview" src="" alt="Preview">
+            </div>
+
+            <button class="btn-submit" id="submitBtn">SEND IMAGE FOR CONFIRMATION & GET ACCESS</button>
+            <p style="font-size: 0.7rem; text-align: center; margin-top: 10px;">Your payment is secured with 7-day Moneyback Guarantee.</p>
+        </div>
+
+        <div class="reviews-container">
+            <h3 style="margin-bottom: 20px;">Customer Reviews</h3>
+            <img src="https://i.ibb.co/7NL48Hs9/IMG-20260119-175838.jpg" class="review-img" alt="Review 1">
+            <img src="https://i.ibb.co/dsBs3Ywk/IMG-20260119-175823.jpg" class="review-img" alt="Review 2">
+            <img src="https://i.ibb.co/7d2dKZFf/IMG-20260119-175902.jpg" class="review-img" alt="Review 3">
+        </div>
+
+    </div>
+
+    <div class="footer-info">
+        Student Support: 0344-1372730 | WhatsApp Only<br><br>
+        Copyright © Tutornextgen. All Rights Reserved.
+    </div>
+
+    <script>
+        // Countdown Logic
+        function startTimer(duration, display) {
+            var timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = hours + " : " + minutes + " : " + seconds;
+                if (--timer < 0) timer = duration;
+            }, 1000);
+        }
+        window.onload = function () {
+            startTimer(3905, document.querySelector('#countdown'));
+        };
+
+        // ImgBB Upload Logic
+        const apiKey = 'be524f4a604fc8b0e1b36d8d1644c296';
+        const imageUpload = document.getElementById('imageUpload');
+        const loader = document.getElementById('uploadLoader');
+        const imagePreview = document.getElementById('imagePreview');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        let uploadedImageUrl = "";
+
+        imageUpload.addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            fileNameDisplay.innerText = file.name;
+            loader.style.display = 'block';
+            const formData = new FormData();
+            formData.append('image', file);
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.success) {
+                    uploadedImageUrl = data.data.url;
+                    imagePreview.src = uploadedImageUrl;
+                    imagePreview.style.display = 'block';
+                    loader.style.display = 'none';
+                }
+            } catch (err) {
+                alert("Upload failed.");
+                loader.style.display = 'none';
+            }
+        });
+
+        // WhatsApp Logic
+        document.getElementById('submitBtn').onclick = function() {
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const whatsappNum = document.getElementById('userWhatsApp').value;
+            const targetNumber = "923441372730";
+
+            if (!name || !email || !whatsappNum) { alert("Please fill details."); return; }
+            if (!document.getElementById('checkSent').checked || !document.getElementById('checkUpload').checked) { alert("Check the boxes."); return; }
+            if (!uploadedImageUrl) { alert("Upload screenshot."); return; }
+
+            const msg = `*NEW ENROLLMENT*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*WhatsApp:* ${whatsappNum}%0A*Screenshot:* ${uploadedImageUrl}`;
+            window.open(`https://wa.me/${targetNumber}?text=${msg}`, '_blank');
+        };
+    </script>
+</body>
+</html>
